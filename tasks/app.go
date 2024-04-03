@@ -21,9 +21,7 @@ const redisAddr = "127.0.0.1:6379"
 const redisPass = "mypassword"
 
 func serve(wg *sync.WaitGroup) {
-	defer func() {
-		wg.Done()
-	}()
+	defer wg.Done()
 
 	h := asynqmon.New(asynqmon.Options{
 		RootPath:     "/monitoring",
@@ -56,9 +54,7 @@ func serve(wg *sync.WaitGroup) {
 }
 
 func processTasks(wg *sync.WaitGroup) {
-	defer func() {
-		wg.Done()
-	}()
+	defer wg.Done()
 
 	srv := asynq.NewServer(
 		asynq.RedisClientOpt{Addr: redisAddr, Password: redisPass},
