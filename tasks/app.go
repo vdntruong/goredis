@@ -65,9 +65,8 @@ func processTasks(wg *sync.WaitGroup) {
 		asynq.Config{
 			Concurrency: 10,
 			Queues: map[string]int{
-				"critical": 6,
-				"default":  3,
-				"low":      1,
+				QueueCritical: 6,
+				QueueDefault:  3,
 			},
 		},
 	)

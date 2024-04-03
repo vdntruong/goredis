@@ -9,6 +9,11 @@ import (
 	"github.com/hibiken/asynq"
 )
 
+const (
+	QueueCritical = "very-critical"
+	QueueDefault  = "just-normal"
+)
+
 type EmailTaskProcessor interface {
 	ProcessEmailTask(ctx context.Context, task *asynq.Task) error
 }
@@ -28,7 +33,7 @@ func NewTaskProcessor(server *asynq.Server) *TaskProcessor {
 func (t *TaskProcessor) ProcessImageTask(ctx context.Context, task *asynq.Task) error {
 	var payload ImageResizePayload
 	if err := json.Unmarshal(task.Payload(), &payload); err != nil {
-		return fmt.Errorf("failed to unmarsal email task: %v: %w", err, asynq.SkipRetry)
+		return fmt.Errorf("failed to unmarsal image task: %v: %w", err, asynq.SkipRetry)
 	}
 
 	log.Printf(
